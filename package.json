@@ -1,0 +1,28 @@
+{
+  "name": "new-standards",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.5.0",
+    "eslint-loader": "^1.3.0",
+    "mithril": "^0.2.2-rc.1",
+    "webpack": "^1.12.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonnyandreola/js-standards.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonnyandreola/js-standards/issues"
+  },
+  "homepage": "https://github.com/jonnyandreola/js-standards#readme",
+  "description": ""
+}
