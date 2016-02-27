@@ -1,18 +1,12 @@
 module.exports = {
-  context: './',
-  entry: './index.js',
+  context: '',
+  entry: './route.js',
+  devtool: 'source-map',
   output: {
     path: './dist/',
     filename: 'bundle.js'
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader'
-      }
-    ],
     loaders: [
       {
         test: /\.js$/,
