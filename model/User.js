@@ -8,9 +8,14 @@ class User extends BaseModel {
 		this.name = m.prop(args.name || '');
 	};
 
-	get url(){
+	static get url(){
 		return '/api/users';
 	}
+
+	static list(args) {
+		BaseModel.list(User.url, args);
+	}
+
 }
 
 export default User;

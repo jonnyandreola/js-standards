@@ -20,8 +20,8 @@ class BaseModel {
 		return this._isLoading();
 	}
 
-	list(args) {
-		console.log('Query called:', this.url, args);
+	static list(url, args) {
+		console.log('Query called:', url, args);
 	}
 
 	get(id) {
