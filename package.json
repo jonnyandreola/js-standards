@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
-    "compile": "webpack --progress --colors",
+    "css": "gulp",
+    "js": "grunt",
+    "compile": "rake",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,6 +17,8 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.5.0",
     "eslint-loader": "^1.3.0",
+    "jquery": "^2.2.1",
+    "lscache": "^1.0.5",
     "mithril": "^0.2.2-rc.1",
     "webpack": "^1.12.14"
   },
