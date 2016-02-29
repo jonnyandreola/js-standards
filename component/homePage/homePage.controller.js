@@ -9,13 +9,11 @@ export default function homePageController () {
 
 	ctrl.user = new User({name: 'John Doe'});
 
-	ctrl.user.list({Name: 'Jonny'})
-	ctrl.user.get(1)
-	ctrl.user.post()
-	ctrl.user.patch()
-	ctrl.user.remove(1)
-
-	User.list({Name: 'Bruce'})
+	ctrl.user.list({Name: 'Jonny'});
+	ctrl.user.get(1);
+	ctrl.user.post();
+	ctrl.user.patch();
+	ctrl.user.remove(1);
 
 	return ctrl;
 }

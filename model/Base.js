@@ -1,25 +1,27 @@
 import m from 'mithril';
 
 class BaseModel {
-	constructor () {
-		this.isLoading = m.prop(false);
+	constructor ({uniqueIdentifier = 'id'}) {
+		this._isLoading = m.prop(false);
+		this._uniqueIdentifier = m.prop(uniqueIdentifier);
 	}
 
 	toObject() {
 		const obj = {};
 		for(let field in this) {
+			if(field.charAt(0) === '_') continue; // no privates
 			obj[field] = this[field]();
 		}
 
 		return obj;
 	}
 
-	static list(args) {
-		console.log('Query called:', this.url, args);
+	get isLoading() {
+		return this._isLoading();
 	}
 
 	list(args) {
-		BaseModel.list(args);
+		console.log('Query called:', this.url, args);
 	}
 
 	get(id) {
@@ -27,7 +29,7 @@ class BaseModel {
 	}
 
 	save() {
-		return this.id() ? this.patch() : this.post();
+		return this[this._uniqueIdentifier()]() ? this.patch() : this.post();
 	}
 
 	post() {
