@@ -6,7 +6,7 @@ export default function homePageView (ctrl) {
 		m('p', ctrl.user.name()),
 		m('small', (ctrl.user.isLoading() ? 'Loading' : 'Not loading') ),
 		m('button', {
-			onclick: ctrl.user.toggleLoading.bind(ctrl.user)
+			onclick: ctrl.user.save.bind(ctrl.user)
 		},'Toggle')
 	])
 }
