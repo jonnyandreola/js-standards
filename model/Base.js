@@ -2,105 +2,126 @@ import m from 'mithril';
 
 class BaseModel {
 
-	constructor (args) {
-		this._isLoading = m.prop(false);
-		this._uniqueIdentifier = m.prop(args.uniqueIdentifier);
-	}
+    constructor (args) {
+        // Model state
+        this._isLoading = BaseModel.setValue();
 
-	/**
-	 * Creates a plain object from instance of model.
-	 * @return {object} plain object
-	 */
-	serialize() {
-		const obj = {};
-		for( let field in this ) {
+        // Model unique item identifier
+        this._uniqueIdentifier = BaseModel.setValue(args._uniqueIdentifier, 'id');
 
-			// skip privates
-			if(field.charAt(0) === '_') continue;
+        // Reference to subclass
+        this._type = BaseModel.setValue(args._type);
+    }
 
-			if( typeof this[field] === 'function') {
-				obj[field] = this[field]();
-			} else {
-				obj[field] = this[field];
-			}
-		}
+    ////////////////////
+    // STATIC METHODS //
+    ////////////////////
+    /**
+     * Fetch items for a given resource
+     * @param  {object} args query params
+     * @return {Promise}
+     */
+    static list(args) {
+        console.log('Query called:', this._type().url, args);
+    }
 
-		return obj;
-	}
+    /**
+     * Sets a m.prop with passed value, if no value is passed
+     * it will use the second argument (defaultValue)
+     * fallbacks to false if nothing is provided
+     * @param {any}  value        value to be set in returned m.prop
+     * @param {any} defaultValue  default value to be used if no value  is passed
+     * @return {function}
+     */
+    static setValue(value, defaultValue = false) {
+        let normalizedValue = value !== undefined
+            ? value
+            : defaultValue;
 
-	// Return loading status of instance
-	get isLoading() {
-		return this._isLoading();
-	}
+        return m.prop(normalizedValue);
+    }
 
-	set isLoading(status) {
-		return this._isLoading(status);
-	}
+    //////////////////////
+    // INSTANCE METHODS //
+    //////////////////////
 
-	/////////////
-	// METHODS //
-	/////////////
+    /**
+     * Creates a plain object from instance of model.
+     * @return {object} plain object
+     */
+    serialize() {
+        const obj = {};
+        for( let field in this ) {
 
-	/**
-	 * Fetch items for a given resource
-	 * @param  {string} url  relative endpoint for resource
-	 * @param  {object} args query params
-	 * @return {Promise}
-	 */
-	static list(url, args) {
-		console.log('Query called:', url, args);
-	}
+            // skip privates
+            if(field.charAt(0) === '_') continue;
 
-	list (url, args) {
-		return BaseModel.list(url, args)
-	}
+            if( typeof this[field] === 'function') {
+                obj[field] = this[field]();
+            } else {
+                obj[field] = this[field];
+            }
+        }
 
-	/**
-	 * Retrieve data for specific item based on ID
-	 * @param  {string} url relative endpoint for resource
-	 * @param  {int} id  	item ID
-	 * @return {Promise}
-	 */
-	get(url, id) {
-		console.log('Get called:', url, id);
-	}
+        return obj;
+    }
 
-	/**
-	 * Based on existence of item ID switches between PATCH or POST methods
-	 * @param  {string} url relative endpoint for resource
-	 * @return {Promise}
-	 */
-	save(url) {
-		return this[this._uniqueIdentifier()]() ? this.patch(url) : this.post(url);
-	}
+    // Return loading status of instance
+    get isLoading() {
+        return () => this._isLoading();
+    }
 
-	/**
-	 * Post request with instance data
-	 * @param  {string} url relative endpoint for resource
-	 * @return {Promise}
-	 */
-	post(url) {
-		console.log('Post called:', url, this.serialize());
-	}
+    // Sets loading status of instance
+    set isLoading(status) {
+        return status => this._isLoading(status);
+    }
 
-	/**
-	 * Patch request with instance data
-	 * @param  {string} url relative endpoint for resource
-	 * @return {Promise}
-	 */
-	patch(url) {
-		console.log('Patch called:', url, this.serialize());
-	}
+    /**
+     * Retrieve data for specific item based on ID
+     * @param  {int} id     item ID
+     * @return {Promise}
+     */
+    get(id) {
+        console.log('Get called:', this._type().url, id);
+    }
 
-	/**
-	 * Delete an item based on ID
-	 * @param  {string} url relative endpoint for resource
-	 * @param  {int} id     item ID
-	 * @return {Promise}
-	 */
-	remove(url, id) {
-		console.log('Delete called:', url, id);
-	}
+    /**
+     * Based on existence of item ID switches between PATCH or POST methods
+     * @return {Promise}
+     */
+    save() {
+        return this[this._uniqueIdentifier()]()
+            ? this.patch(this._type().url)
+            : this.post(this._type().url);
+    }
+
+    /**
+     * Post request with instance data
+     * @return {Promise}
+     */
+    post() {
+        console.log('Post called:', this._type().url, this.serialize());
+    }
+
+    /**
+     * Patch request with instance data
+     * @param  {string} url relative endpoint for resource
+     * @return {Promise}
+     */
+    patch() {
+        console.log('Patch called:', this._type().url, this.serialize());
+    }
+
+    /**
+     * Delete an item using its current id;
+     * @return {Promise}
+     */
+    remove() {
+        if (!this[this._uniqueIdentifier()]) {
+            throw new Error('Can\'t remove item without an ID');
+        }
+        console.log('Delete called:', this._type().url, this[this._uniqueIdentifier()]);
+    }
 }
 
 export default BaseModel;
