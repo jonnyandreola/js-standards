@@ -1,4 +1,4 @@
-import _ from 'underscore';
+// import _ from 'underscore';
 
 class Collection {
 
@@ -9,6 +9,8 @@ class Collection {
 
         this.Items = items.map((item) => new type(item));
         this.type = type;
+
+        return this.Items;
     }
 
     /**
@@ -35,7 +37,7 @@ class Collection {
      * @return {array} items that matches arguments
      */
     get findWhere() {
-        return (args = {}) => _.findWhere(this.Items, args);
+        // return (args = {}) => _.findWhere(this.Items, args);
     }
 }
 

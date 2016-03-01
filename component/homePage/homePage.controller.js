@@ -1,29 +1,25 @@
+import m from 'mithril';
 import User from '../../model/User';
-import BaseModel from '../../model/Base';
+import Collection from '../../model/Collection';
 
 export default function homePageController () {
-	/**
-	 * Naming this 'ctrl' make easier to copy and paste
-	 * between controller and view
-	 */
 	const ctrl = {};
 
-	ctrl.user = new User();
+	ctrl.isLoading = m.prop(false);
 
-	// ctrl.user.name('Jonny');
+    const response = [
+        {UserID: 1, name: 'John'},
+        {UserID: 2, name: 'Bruce'},
+        {UserID: 3, name: 'Steve'}
+    ];
 
-	// ctrl.user.get(1)
-	// 	.then(ctrl.user.isLoading = true);
-	// ctrl.user.save();
-	// ctrl.user.remove(1);
+    ctrl.People = new Collection(User, response);
 
-	// User.list({Status: 'active'})
-	// User.remove(1)
-
-	// var users = User.list();
-	// var people = Collection(users);
-
-	// people.where('status', 'active');
+	ctrl.init = function init(options) {
+		/**
+		 * Init all components controller here
+		 */
+	};
 
 	return ctrl;
 }
