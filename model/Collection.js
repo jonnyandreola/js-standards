@@ -1,43 +1,24 @@
-// import _ from 'underscore';
-
-class Collection {
+class Collection extends Array {
 
     constructor(type, items) {
         if (arguments.length !== 2) {
             throw new Error('Type and Items must be specified to initialize a collection.');
         }
 
-        this.Items = items.map((item) => new type(item));
-        this.type = type;
-
-        return this.Items;
-    }
-
-    /**
-     * Return all items in collection
-     * @return {array} All items in collection
-     */
-    get all() {
-        return () => this.Items;
+        super(...items.map((item) => new type(item)));
+        this._type = type;
+        this.findByID = Collection.findByID(this);
     }
 
     /**
      * Find items in collection by ID defined in model
      * @return {[type]} Model
      */
-    get findByID() {
+    static findByID(array) {
         return (id) => {
-            var result = this.Items.filter( (item) => item[this.type.uniqueIdentifier] );
-            return result.length === 1 ? result[0] : undefined;
+            var result = array.find( (item) => item[array._type.uniqueIdentifier]() === id );
+            return result;
         }
-    }
-
-    /**
-     * Return array items that matches arguments
-     * @return {array} items that matches arguments
-     */
-    get findWhere() {
-        // return (args = {}) => _.findWhere(this.Items, args);
     }
 }
 

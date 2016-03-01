@@ -9,6 +9,7 @@ export default function homePageView (ctrl) {
                     key: user.UserID
                 }, user.name())
             })
-        ])
+        ]),
+        m('h2', ctrl.Jonny.name())
 	])
 }
