@@ -8,11 +8,12 @@ class Collection extends Array {
         super(...items.map((item) => new type(item)));
         this._type = type;
         this.findByID = Collection.findByID(this);
+        this.removeByID = Collection.removeByID(this);
     }
 
     /**
-     * Find items in collection by ID defined in model
-     * @return {[type]} Model
+     * Find item in collection by ID defined in model
+     * @return {Model}
      */
     static findByID(array) {
         return (id) => {
@@ -21,9 +22,23 @@ class Collection extends Array {
         }
     }
 
+    /**
+     * Remove item in collection by ID defined in model
+     * @return {Model}
+     */
     static removeByID(array) {
         return (id) => {
+            var found;
+            for (let i = 0; i < array.length; i++) {
+                if (array[i][array._type.uniqueIdentifier]() === id) {
+                    found = i;
+                    break;
+                }
+            }
 
+            if (found > -1) {
+                return array.splice(found, 1);
+            }
         }
     }
 }

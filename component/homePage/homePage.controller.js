@@ -13,7 +13,8 @@ export default function homePageController () {
 
     ctrl.People = new Collection(User, response);
 
-    ctrl.Jonny = ctrl.People.findByID(3);
+    ctrl.Jonny = ctrl.People.findByID(1);
+    ctrl.People.removeByID(2);
 
 	ctrl.init = function init(options) {
 		/**
