@@ -8,7 +8,7 @@ class /*MODEL_NAME*/ extends BaseModel {
 			_uniqueIdentifier: /*MODEL_NAME*/.uniqueIdentifier,
 			_type: /*MODEL_NAME*/
 		});
-		this./*MODEL_NAME*/ID = super.setValue(args./*MODEL_NAME*/ID, 0);
+		this./*MODEL_NAME*/ID = BaseModel.setValue(args./*MODEL_NAME*/ID, 0);
 	}
 
 	////////////////////

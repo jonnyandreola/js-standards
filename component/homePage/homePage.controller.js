@@ -7,16 +7,9 @@ export default function homePageController () {
 
 	ctrl.isLoading = m.prop(false);
 
-    Chatter.list().then( posts => ctrl.Posts = Collection(Chatter, posts));
-    debugger;
-    // User.list({});
+    ctrl.Posts = new Collection([], Chatter);
 
-    // const response = [ {UserID: 1, name: 'John'}, {UserID: 2, name: 'Bruce'}, {UserID: 3, name: 'Steve'} ];
-
-    // ctrl.People = new Collection(User, response);
-
-    // ctrl.Jonny = ctrl.People.findByID(1);
-    // ctrl.People.removeByID(2);
+    Chatter.list().then(data => ctrl.Posts = new Collection(data, Chatter));
 
 	ctrl.init = function init(options) {
 		/**

@@ -8,8 +8,9 @@ class Chatter extends BaseModel {
 			_uniqueIdentifier: Chatter.uniqueIdentifier,
 			_type: Chatter
 		});
-		this.ChatterID = super.setValue(args.ChatterID, 0);
-		this.Content = super.setValue(args.Content, '');
+		this.ChatterID = BaseModel.setValue(args.ChatterID, 0);
+		this.Content = BaseModel.setValue(args.Content, '');
+		this.Name = BaseModel.setValue(args.CreatedByFullName, '');
 	}
 
 	////////////////////

@@ -1,11 +1,11 @@
 class Collection extends Array {
 
-    constructor(type, items) {
+    constructor(items, type) {
         if (arguments.length !== 2) {
             throw new Error('Type and Items must be specified to initialize a collection.');
         }
-
-        super(...items.map((item) => new type(item)));
+        let Items = items.map((item) => new type(item));
+        super(...Items);
         this._type = type;
         this.findByID = Collection.findByID(this);
         this.removeByID = Collection.removeByID(this);
