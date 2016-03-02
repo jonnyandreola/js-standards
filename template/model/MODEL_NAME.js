@@ -45,7 +45,7 @@ class /*MODEL_NAME*/ extends BaseModel {
 	 * @return {Promise}
 	 */
 	static list(args) {
-		return super.list(/*MODEL_NAME*/.url, args);
+		return super.list(/*MODEL_NAME*/, args);
 	}
 }
 

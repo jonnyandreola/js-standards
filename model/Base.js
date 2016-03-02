@@ -21,8 +21,15 @@ class BaseModel {
      * @param  {object} args query params
      * @return {Promise}
      */
-    static list(url, args) {
-        console.log('Query called:', url, args);
+    static list(type, args) {
+        console.log('Query called:', type.url, args);
+        return m.request({
+            method: 'GET',
+            url: type.url,
+            unwrapSuccess: function(response) {
+                return response.Entries;
+            }
+        })
     }
 
     /**

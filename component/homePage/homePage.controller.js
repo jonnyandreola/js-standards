@@ -1,5 +1,5 @@
 import m from 'mithril';
-import User from '../../model/User';
+import Chatter from '../../model/Chatter';
 import Collection from '../../model/Collection';
 
 export default function homePageController () {
@@ -7,14 +7,16 @@ export default function homePageController () {
 
 	ctrl.isLoading = m.prop(false);
 
-    User.list({});
+    Chatter.list().then( posts => ctrl.Posts = Collection(Chatter, posts));
+    debugger;
+    // User.list({});
 
-    const response = [ {UserID: 1, name: 'John'}, {UserID: 2, name: 'Bruce'}, {UserID: 3, name: 'Steve'} ];
+    // const response = [ {UserID: 1, name: 'John'}, {UserID: 2, name: 'Bruce'}, {UserID: 3, name: 'Steve'} ];
 
-    ctrl.People = new Collection(User, response);
+    // ctrl.People = new Collection(User, response);
 
-    ctrl.Jonny = ctrl.People.findByID(1);
-    ctrl.People.removeByID(2);
+    // ctrl.Jonny = ctrl.People.findByID(1);
+    // ctrl.People.removeByID(2);
 
 	ctrl.init = function init(options) {
 		/**

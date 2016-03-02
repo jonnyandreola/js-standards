@@ -2,14 +2,14 @@ import m from 'mithril';
 
 
 export default function homePageView (ctrl) {
+    if (!ctrl.Posts) return;
 	return m('.homePage-container', [
         m('ul', [
-            ctrl.People.map((user) => {
+            ctrl.Posts.map((post) => {
                 return m('li', {
-                    key: user.UserID
-                }, user.name())
+                    key: post.ChatterID
+                }, post.Content())
             })
-        ]),
-        m('h2', ctrl.Jonny.name())
+        ])
 	])
 }
