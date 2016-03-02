@@ -7,6 +7,8 @@ export default function homePageController () {
 
 	ctrl.isLoading = m.prop(false);
 
+    User.list({});
+
     const response = [ {UserID: 1, name: 'John'}, {UserID: 2, name: 'Bruce'}, {UserID: 3, name: 'Steve'} ];
 
     ctrl.People = new Collection(User, response);

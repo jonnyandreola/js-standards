@@ -20,6 +20,12 @@ class Collection extends Array {
             return result;
         }
     }
+
+    static removeByID(array) {
+        return (id) => {
+
+        }
+    }
 }
 
 export default Collection

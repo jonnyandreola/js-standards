@@ -12,7 +12,7 @@ function renameModel(content) {
 }
 
 gulp.task('component', function() {
-    return gulp.src('template/component/*.js')
+    return gulp.src('template/component/*')
         .pipe(rename(/COMPONENT_NAME/, argv.name))
         .pipe(change(renameComponent))
         .pipe(gulp.dest('component/'+ argv.name))

@@ -21,8 +21,8 @@ class BaseModel {
      * @param  {object} args query params
      * @return {Promise}
      */
-    static list(args) {
-        console.log('Query called:', this._type().url, args);
+    static list(url, args) {
+        console.log('Query called:', url, args);
     }
 
     /**

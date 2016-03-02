@@ -46,7 +46,7 @@ class User extends BaseModel {
 	 * @return {Promise}
 	 */
 	static list(args) {
-		return super.list(args);
+		return super.list(User.url, args);
 	}
 }
 
