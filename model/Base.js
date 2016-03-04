@@ -4,13 +4,13 @@ class BaseModel {
 
     constructor (args) {
         // Model state
-        this._isLoading = BaseModel.setValue();
+        this._isLoading = BaseModel.setValue(false, 'bool');
 
         // Model unique item identifier
-        this._uniqueIdentifier = BaseModel.setValue(args._uniqueIdentifier, 'id');
+        this._uniqueIdentifier = BaseModel.setValue(args._uniqueIdentifier, 'string', 'id');
 
         // Reference to subclass
-        this._type = BaseModel.setValue(args._type);
+        this._type = BaseModel.setValue(args._type, 'function');
     }
 
     ////////////////////
@@ -33,17 +33,69 @@ class BaseModel {
     }
 
     /**
-     * Sets a m.prop with passed value, if no value is passed
-     * it will use the second argument (defaultValue)
+     * Sets a m.prop with passed value, also will type cast/check, if type does
+     * not match will throw errors but will not crash the application
+     * if no value is passed it will use the second argument (defaultValue)
      * fallbacks to false if nothing is provided
      * @param {any}  value        value to be set in returned m.prop
+     * @param {string} type       type of value
      * @param {any} defaultValue  default value to be used if no value  is passed
      * @return {function}
      */
-    static setValue(value, defaultValue = false) {
-        let normalizedValue = value !== undefined
+    static setValue(value, type, defaultValue = false) {
+        let initialValue = value !== undefined
             ? value
             : defaultValue;
+        let normalizedValue;
+        
+        try {
+            switch (type) {
+                case 'any' :
+                    normalizedValue = value;
+                    break;
+                case 'bool' :
+                    normalizedValue = !!value;
+                    break;
+                case 'int' :
+                    normalizedValue = parseInt(value, 10);
+                    break;
+                case 'float' :
+                    normalizedValue = parseFloat(value);
+                    break;
+                case 'string' :
+                    normalizedValue = "" + value + "";
+                    break;
+                case 'array' :
+                    if (!Array.isArray(value)) {
+                        throw new TypeError(`${value} is not type Array.`);
+                    }
+                    normalizedValue = value;
+                    break;
+                case 'object' :
+                    if (value !== Object(value)) {
+                        throw new TypeError(`${value} is not type Object.`);
+                    }
+                    normalizedValue = value;
+                    break;
+                case 'function' :
+                    if (typeof value !== 'function') {
+                        throw new TypeError(`${value} is not type Function.`)
+                    }
+                    normalizedValue = value;
+                    break;
+                default :
+                    if (typeof value === 'function') {
+                        normalizedValue = new type(value);
+                    } else {
+                        throw new TypeError(`${value} wasn't normalized with a correct type. Please check if ${type} is a valid type.`);
+                        normalizedValue = value;
+                    }
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            
+        }
 
         return m.prop(normalizedValue);
     }

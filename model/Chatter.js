@@ -8,9 +8,9 @@ class Chatter extends BaseModel {
 			_uniqueIdentifier: Chatter.uniqueIdentifier,
 			_type: Chatter
 		});
-		this.ChatterID = BaseModel.setValue(args.ChatterID, 0);
-		this.Content = BaseModel.setValue(args.Content, '');
-		this.Name = BaseModel.setValue(args.CreatedByFullName, '');
+		this.ChatterID = BaseModel.setValue(args.ChatterID, 'int', 0);
+		this.Content = BaseModel.setValue(args.Content, 'string', '');
+		this.Name = BaseModel.setValue(args.CreatedByFullName, 'string', '');
 	}
 
 	////////////////////
@@ -22,7 +22,7 @@ class Chatter extends BaseModel {
 	 * @return {string} api endpoint for model resource
 	 */
 	static get url() {
-		return '/api/Chatter.json';
+		return '/api/Chatter';
 	}
 
 	/**
