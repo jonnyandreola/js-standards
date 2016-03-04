@@ -51,44 +51,44 @@ class BaseModel {
         try {
             switch (type) {
                 case 'any' :
-                    normalizedValue = value;
+                    normalizedValue = initialValue;
                     break;
                 case 'bool' :
-                    normalizedValue = !!value;
+                    normalizedValue = !!initialValue;
                     break;
                 case 'int' :
-                    normalizedValue = parseInt(value, 10);
+                    normalizedValue = parseInt(initialValue, 10);
                     break;
                 case 'float' :
-                    normalizedValue = parseFloat(value);
+                    normalizedValue = parseFloat(initialValue);
                     break;
                 case 'string' :
-                    normalizedValue = "" + value + "";
+                    normalizedValue = "" + initialValue + "";
                     break;
                 case 'array' :
-                    if (!Array.isArray(value)) {
-                        throw new TypeError(`${value} is not type Array.`);
+                    if (!Array.isArray(initialValue)) {
+                        throw new TypeError(`${initialValue} is not type Array.`);
                     }
-                    normalizedValue = value;
+                    normalizedValue = initialValue;
                     break;
                 case 'object' :
-                    if (value !== Object(value)) {
-                        throw new TypeError(`${value} is not type Object.`);
+                    if (initialValue !== Object(initialValue)) {
+                        throw new TypeError(`${initialValue} is not type Object.`);
                     }
-                    normalizedValue = value;
+                    normalizedValue = initialValue;
                     break;
                 case 'function' :
-                    if (typeof value !== 'function') {
-                        throw new TypeError(`${value} is not type Function.`)
+                    if (typeof initialValue !== 'function') {
+                        throw new TypeError(`${initialValue} is not type Function.`)
                     }
-                    normalizedValue = value;
+                    normalizedValue = initialValue;
                     break;
                 default :
-                    if (typeof value === 'function') {
-                        normalizedValue = new type(value);
+                    if (typeof initialValue === 'function') {
+                        normalizedValue = new type(initialValue);
                     } else {
-                        throw new TypeError(`${value} wasn't normalized with a correct type. Please check if ${type} is a valid type.`);
-                        normalizedValue = value;
+                        throw new TypeError(`${initialValue} wasn't normalized with a correct type. Please check if ${type} is a valid type.`);
+                        normalizedValue = initialValue;
                     }
             }
         } catch (err) {
@@ -132,7 +132,7 @@ class BaseModel {
 
     // Sets loading status of instance
     set isLoading(status) {
-        return status => this._isLoading(status);
+        status => this._isLoading(status);
     }
 
     /**
