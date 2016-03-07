@@ -5,11 +5,20 @@ import Collection from '../../model/Collection';
 export default function homePageController () {
 	const ctrl = {};
 
-	ctrl.isLoading = m.prop(false);
+	ctrl.isLoading = m.prop(true);
 
-    ctrl.Posts = new Collection([], Chatter);
+	ctrl.searchByID = id => {
+		ctrl.result = ctrl.Posts.findByID(id);
+	};
 
-    Chatter.list().then(data => ctrl.Posts = new Collection(data, Chatter));
+	ctrl.removeByID = id => {
+		ctrl.Posts.removeByID(id);
+	};
+
+	Chatter.list()
+		.then(data => ctrl.Posts = new Collection(data, Chatter))
+		.then(() => ctrl.isLoading(false));
+
 
 	ctrl.init = function init(options) {
 		/**

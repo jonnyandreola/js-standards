@@ -1,12 +1,12 @@
 class Collection extends Array {
 
-    constructor(items, type) {
+    constructor(items, Type) {
         if (arguments.length !== 2) {
             throw new Error('Type and Items must be specified to initialize a collection.');
         }
-        let Items = items.map((item) => new type(item));
+        let Items = items.map((item) => new Type(item));
         super(...Items);
-        this._type = type;
+        this._type = Type;
         this.findByID = Collection.findByID(this);
         this.removeByID = Collection.removeByID(this);
     }
@@ -17,9 +17,10 @@ class Collection extends Array {
      */
     static findByID(array) {
         return (id) => {
-            var result = array.find( (item) => item[array._type.uniqueIdentifier]() === id );
+            let intID = parseInt(id);
+            let result = array.find( (item) => item[array._type.uniqueIdentifier]() === intID );
             return result;
-        }
+        };
     }
 
     /**
@@ -28,9 +29,10 @@ class Collection extends Array {
      */
     static removeByID(array) {
         return (id) => {
-            var found;
+            let intID = parseInt(id);
+            let found;
             for (let i = 0; i < array.length; i++) {
-                if (array[i][array._type.uniqueIdentifier]() === id) {
+                if (array[i][array._type.uniqueIdentifier]() === intID) {
                     found = i;
                     break;
                 }
@@ -39,8 +41,8 @@ class Collection extends Array {
             if (found > -1) {
                 return array.splice(found, 1);
             }
-        }
+        };
     }
 }
 
-export default Collection
+export default Collection;

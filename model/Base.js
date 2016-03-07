@@ -29,7 +29,7 @@ class BaseModel {
             unwrapSuccess: function(response) {
                 return response.Entries;
             }
-        })
+        });
     }
 
     /**
@@ -69,35 +69,31 @@ class BaseModel {
                     if (!Array.isArray(initialValue)) {
                         throw new TypeError(`${initialValue} is not type Array.`);
                     }
-                    normalizedValue = initialValue;
                     break;
                 case 'object' :
                     if (initialValue !== Object(initialValue)) {
                         throw new TypeError(`${initialValue} is not type Object.`);
                     }
-                    normalizedValue = initialValue;
                     break;
                 case 'function' :
                     if (typeof initialValue !== 'function') {
-                        throw new TypeError(`${initialValue} is not type Function.`)
+                        throw new TypeError(`${initialValue} is not type Function.`);
                     }
-                    normalizedValue = initialValue;
                     break;
                 default :
-                    if (typeof initialValue === 'function') {
+                    if (typeof type === 'function') {
+                        if (!value) return normalizedValue = defaultValue;
                         normalizedValue = new type(initialValue);
                     } else {
                         throw new TypeError(`${initialValue} wasn't normalized with a correct type. Please check if ${type} is a valid type.`);
-                        normalizedValue = initialValue;
                     }
             }
         } catch (err) {
             console.error(err);
+            normalizedValue = initialValue;
         } finally {
-            
+	        return m.prop(normalizedValue);
         }
-
-        return m.prop(normalizedValue);
     }
 
     //////////////////////
